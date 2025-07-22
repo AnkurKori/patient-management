@@ -1,27 +1,17 @@
 package com.pm.patient_service.service;
 
+import com.pm.patient_service.dto.PatientRequestDTO;
 import com.pm.patient_service.dto.PatientResponseDTO;
-import com.pm.patient_service.mapper.PatientMapper;
 import com.pm.patient_service.model.Patient;
-import com.pm.patient_service.repository.PatientRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.UUID;
 
-@Service
-public class PatientService {
+public interface PatientService {
 
-    @Autowired
-    private PatientRepository patientRepository;
+    public List<PatientResponseDTO> getPatients();
 
+    public PatientResponseDTO addPatient(PatientRequestDTO patientRequestDTO);
 
-
-    public List<PatientResponseDTO> getPatients()
-    {
-        List<Patient> patients = patientRepository.findAll();
-        List<PatientResponseDTO> patientsDTO = patients.stream().map(patient-> PatientMapper.toDTO(patient)).collect(Collectors.toList());
-        return patientsDTO;
-    }
+    public PatientResponseDTO updatePatient(UUID id, PatientRequestDTO patientRequestDTO);
 }
